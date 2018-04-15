@@ -2,9 +2,24 @@ import * as React from 'react';
 import './App.css';
 
 import logo from './logo.svg';
+import {PeopleService} from './services/people';
+import {IPagedPeopleResponse} from './types/people';
 
-class App extends React.Component {
-  public render() {
+interface IAppState {
+    People: IPagedPeopleResponse | null;
+}
+
+class App extends React.Component<any, IAppState> {
+    public state = {
+        People: null
+    };
+
+    public componentDidMount() {
+        PeopleService.GetAll()
+            .then(r => this.setState({ People: r}))
+    }
+
+    public render() {
     return (
       <div className="App">
         <header className="App-header">
